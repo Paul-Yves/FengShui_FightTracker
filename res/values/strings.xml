@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FengShui_FightTracker</string>
+    <string name="app_label">Fight Tracker</string>
+
+    <string name="seg_label">Segment: </string>
+    <string name="wound_label">Wounds:</string>
+    <string name="number_label">Number:</string>
+    <string name="mVA_label">main VA:</string>
+    <string name="sVA_label">secondary VA:</string>
+    <string name="speed_label">Speed:</string>
+    <string name="toughness_label">Toughness:</string>
+    <string name="rollmain_label">Roll main:</string>
+    <string name="rollsec_label">Roll secondary:</string>
+    <string name="eatThat_label">Take that!</string>
+    <string name="eatThat_button">Bang!</string>
+
+    <string name="roll">Roll</string>
+
+    <string name="reinit_button">Reinit segments</string>
+    <string name="addNamed_button">Add named</string>
+    <string name="addMook_button">Add mooks</string>
+    <string name="deleteChar_button">Delete</string>
+
+    <string name="name">Name: </string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+
+    <string name="errorCreate">Error in creation, be sure to fill all the fields</string>
+    <string name="create_newNamed">Create a new named character</string>
+
 </resources>

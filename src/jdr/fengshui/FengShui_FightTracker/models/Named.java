@@ -1,5 +1,7 @@
 package jdr.fengshui.FengShui_FightTracker.models;
 
+import java.security.PublicKey;
+
 /**
  * Created by paulyves on 6/29/14.
  */
@@ -35,5 +37,10 @@ public class Named extends Character {
 
     public void setToughness(int toughness) {
         this.toughness = toughness;
+    }
+
+    @Override
+    public String toString() {
+        return name+":"+"VAs("+mainVA+";"+secondaryVA+"), speed:"+speed+", toughness:"+toughness;
     }
 }

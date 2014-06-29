@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Created by paulyves on 6/29/14.
  */
-public class Character {
+public class Character implements Comparable<Character>{
     protected String name;
     protected int segment;
     protected int mainVA;
@@ -123,5 +123,12 @@ public class Character {
 
     public void setSecondaryRes(int secondaryRes) {
         this.secondaryRes = secondaryRes;
+    }
+
+    @Override
+    public int compareTo(Character other){
+        Integer mySpeed = new Integer(speed);
+        Integer hisSpeed = new Integer(other.speed);
+        return mySpeed.compareTo(hisSpeed);
     }
 }
