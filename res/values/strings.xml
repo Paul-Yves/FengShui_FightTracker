@@ -27,6 +27,7 @@
     <string name="ok">Ok</string>
 
     <string name="errorCreate">Error in creation, be sure to fill all the fields</string>
-    <string name="create_newNamed">Create a new named character</string>
+    <string name="create_named">Create a new named characterList</string>
+    <string name="create_mook">Create new mooks</string>
 
 </resources>

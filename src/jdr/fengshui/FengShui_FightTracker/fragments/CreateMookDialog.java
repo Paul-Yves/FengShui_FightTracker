@@ -15,18 +15,18 @@ import jdr.fengshui.FengShui_FightTracker.models.Character;
 import jdr.fengshui.FengShui_FightTracker.utils.CharacterAdapter;
 
 /**
- * Created by paulyves on 6/29/14.
+ * Created by paulyves on 7/1/14.
  */
-public class CreateNamedDialog extends DialogFragment {
+public class CreateMookDialog extends DialogFragment {
     private EditText name;
     private EditText mVA;
     private EditText sVA;
     private EditText speed;
-    private EditText toughness;
+    private EditText number;
     private CharacterAdapter<Character> charAdapter;
 
-    public static CreateNamedDialog newInstance(int title, CharacterAdapter<Character> charAdapter){
-        CreateNamedDialog dialog = new CreateNamedDialog();
+    public static CreateMookDialog newInstance(int title, CharacterAdapter<Character> charAdapter){
+        CreateMookDialog dialog = new CreateMookDialog();
         Bundle args = new Bundle();
         args.putInt("title", title);
         dialog.setArguments(args);
@@ -36,7 +36,7 @@ public class CreateNamedDialog extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.create_named_dialog, container, false);
+        View v = inflater.inflate(R.layout.create_mook_dialog, container, false);
 
         Button cancel = (Button) v.findViewById(R.id.cancel);
         Button validate = (Button) v.findViewById(R.id.validate);
@@ -45,7 +45,7 @@ public class CreateNamedDialog extends DialogFragment {
         mVA = (EditText) v.findViewById(R.id.mVA);
         sVA = (EditText) v.findViewById(R.id.sVA);
         speed = (EditText) v.findViewById(R.id.speed);
-        toughness = (EditText) v.findViewById(R.id.tougness);
+        number = (EditText) v.findViewById(R.id.number);
 
         validate.setOnClickListener(validateListener);
         cancel.setOnClickListener(cancelListener);
@@ -62,8 +62,8 @@ public class CreateNamedDialog extends DialogFragment {
                     int mainVA = Integer.parseInt(mVA.getText().toString());
                     int secVA = Integer.parseInt(sVA.getText().toString());
                     int speedVal = Integer.parseInt(speed.getText().toString());
-                    int toughnessVal = Integer.parseInt(toughness.getText().toString());
-                    Named newChar = new Named(charName,mainVA,secVA,speedVal,toughnessVal);
+                    int numberVal = Integer.parseInt(number.getText().toString());
+                    Mook newChar = new Mook(charName,mainVA,secVA,speedVal,numberVal);
                     result = 1;
                     Toast.makeText(getActivity(), newChar.toString(), Toast.LENGTH_SHORT).show();
                     charAdapter.addItem(newChar);

@@ -7,7 +7,10 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.NumberPicker;
 import jdr.fengshui.FengShui_FightTracker.R;
+import jdr.fengshui.FengShui_FightTracker.fragments.CreateMookDialog;
 import jdr.fengshui.FengShui_FightTracker.fragments.CreateNamedDialog;
 import jdr.fengshui.FengShui_FightTracker.models.*;
 import jdr.fengshui.FengShui_FightTracker.models.Character;
@@ -16,11 +19,12 @@ import jdr.fengshui.FengShui_FightTracker.utils.CharacterAdapter;
 import java.util.ArrayList;
 
 public class Tracker extends Activity {
-    private ArrayList<Character> charList;
-    private CharacterAdapter<Character> charAdapter;
     private Button reinitSeg;
     private Button addNamed;
     private Button addMook;
+    private NumberPicker segments;
+    private CharacterAdapter<Character> charAdapter;
+    private ListView charListView;
 
     private final int ADDANAMED = 2;
     private final int ADDAMOOK = 3;
@@ -31,6 +35,14 @@ public class Tracker extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        charListView = (ListView) findViewById(R.id.charList);
+        charAdapter = new CharacterAdapter<Character>(this, R.layout.create_named_dialog, new ArrayList<Character>());
+        charListView.setAdapter(charAdapter);
+        segments = (NumberPicker) findViewById(R.id.gen_segment);
+        segments.setValue(0);
+        segments.setMinValue(0);
+        segments.setMaxValue(100);
         reinitSeg = (Button) findViewById(R.id.init_button);
         addNamed = (Button) findViewById(R.id.add_named);
         addNamed.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +52,12 @@ public class Tracker extends Activity {
             }
         });
         addMook = (Button) findViewById(R.id.add_mook);
+        addMook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogType(ADDAMOOK);
+            }
+        });
 
     }
 
@@ -54,11 +72,16 @@ public class Tracker extends Activity {
         DialogFragment dial = null;
         switch (type){
             case ADDANAMED :
-                dial = CreateNamedDialog.newInstance(R.string.create_newNamed);
+                dial = CreateNamedDialog.newInstance(R.string.create_named, charAdapter);
                 break;
             case ADDAMOOK :
+                dial = CreateMookDialog.newInstance(R.string.create_mook, charAdapter);
                 break;
         }
         dial.show(getFragmentManager(),"dialog");
+    }
+
+    public NumberPicker getSegments() {
+        return segments;
     }
 }
