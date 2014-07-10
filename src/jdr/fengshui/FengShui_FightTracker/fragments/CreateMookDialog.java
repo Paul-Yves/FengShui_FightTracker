@@ -67,6 +67,7 @@ public class CreateMookDialog extends DialogFragment {
                     result = 1;
                     Toast.makeText(getActivity(), newChar.toString(), Toast.LENGTH_SHORT).show();
                     charAdapter.addItem(newChar);
+                    charAdapter.reSort();
                 } catch(NumberFormatException e) {
                     result = -1;
                 }

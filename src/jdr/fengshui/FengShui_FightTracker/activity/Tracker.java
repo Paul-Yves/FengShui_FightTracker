@@ -44,6 +44,14 @@ public class Tracker extends Activity {
         segments.setMinValue(0);
         segments.setMaxValue(100);
         reinitSeg = (Button) findViewById(R.id.init_button);
+        reinitSeg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (Character character : charAdapter.getCharacterList()){
+                    character.rollInit();
+                }
+            }
+        });
         addNamed = (Button) findViewById(R.id.add_named);
         addNamed.setOnClickListener(new View.OnClickListener() {
             @Override

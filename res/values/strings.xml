@@ -29,5 +29,6 @@
     <string name="errorCreate">Error in creation, be sure to fill all the fields</string>
     <string name="create_named">Create a new named characterList</string>
     <string name="create_mook">Create new mooks</string>
+    <string name="delChar_dialog_title">Delete?</string>
 
 </resources>

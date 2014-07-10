@@ -55,6 +55,10 @@ public class Character implements Comparable<Character>{
      */
     public int rollSkill(int skill){
         int diceRes = this.fengshuiRoll();
+        segment -= 3;
+        if (segment < 0){
+            segment = 0;
+        }
         if (skill==1){
             mainRes = mainVA + diceRes;
             return mainRes;

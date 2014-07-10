@@ -1,6 +1,8 @@
 package jdr.fengshui.FengShui_FightTracker.utils;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,13 +88,90 @@ public class CharacterAdapter<T> extends ArrayAdapter<T> {
             holder.rollMainRes = (TextView) convertView.findViewById(R.id.rollmain_res);
             holder.rollSec = (Button) convertView.findViewById(R.id.rollsec_button);
             holder.rollSecRes = (TextView) convertView.findViewById(R.id.rollsec_res);
+            holder.delete = (Button) convertView.findViewById(R.id.delButton);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder)convertView.getTag();
         }
-        Character character = (Character) this.characterList.get(position);
+        final Character character = (Character) this.characterList.get(position);
         holder.name.setText(character.getName());
-
+        holder.segments.setValue(character.getSegment());
+        holder.segments.setMinValue(0);
+        holder.segments.setMaxValue(100);
+        holder.segments.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                character.setSegment(newVal);
+                reSort();
+            }
+        });
+        holder.mainVA.setText(String.valueOf(character.getMainVA()));
+        final ViewHolder finalHolder = holder;
+        holder.rollMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finalHolder.rollMainRes.setText(String.valueOf(character.rollSkill(1)));
+                finalHolder.segments.setValue(character.getSegment());
+                reSort();
+            }
+        });
+        holder.secVA.setText(String.valueOf(character.getSecondaryVA()));
+        holder.rollSecRes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finalHolder.rollMainRes.setText(String.valueOf(character.rollSkill(2)));
+                finalHolder.segments.setValue(character.getSegment());
+                reSort();
+            }
+        });
+        holder.speed.setText(String.valueOf(character.getSpeed()));
+        if (type == NAMED){
+            final Named namedChar = (Named) character;
+            holder.toughness.setText(String.valueOf(namedChar.getToughness()));
+            holder.wounds.setMinValue(0);
+            holder.wounds.setMaxValue(100);
+            holder.wounds.setValue(namedChar.getWounds());
+            holder.wounds.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    namedChar.setWounds(newVal);
+                }
+            });
+            holder.eatThat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int dmg = Integer.parseInt(finalHolder.eatThatVal.getText().toString());
+                    namedChar.eatThat(dmg);
+                    finalHolder.wounds.setValue(namedChar.getWounds());
+                    finalHolder.eatThatVal.setText("0");
+                }
+            });
+        }else{
+            holder.number.setValue(((Mook)character).getNumber());
+            holder.number.setMinValue(0);
+            holder.number.setMaxValue(((Mook)character).getNumber()+50);
+            holder.number.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    ((Mook)character).setNumber(newVal);
+                }
+            });
+        }
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(R.string.delChar_dialog_title);
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        delItem((T)character);
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel, null);
+                builder.show();
+            }
+        });
         return convertView;
     }
 
