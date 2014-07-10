@@ -43,6 +43,12 @@ public class Tracker extends Activity {
         segments.setValue(0);
         segments.setMinValue(0);
         segments.setMaxValue(100);
+        segments.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                charAdapter.reSort();
+            }
+        });
         reinitSeg = (Button) findViewById(R.id.init_button);
         reinitSeg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,5 +97,8 @@ public class Tracker extends Activity {
 
     public NumberPicker getSegments() {
         return segments;
+    }
+    public int getCurrentSegment(){
+        return segments.getValue();
     }
 }

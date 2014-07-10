@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import jdr.fengshui.FengShui_FightTracker.R;
+import jdr.fengshui.FengShui_FightTracker.activity.Tracker;
 import jdr.fengshui.FengShui_FightTracker.models.*;
 import jdr.fengshui.FengShui_FightTracker.models.Character;
 
@@ -98,10 +99,12 @@ public class CharacterAdapter<T> extends ArrayAdapter<T> {
         holder.segments.setValue(character.getSegment());
         holder.segments.setMinValue(0);
         holder.segments.setMaxValue(100);
+        final View finalConvertView = convertView;
         holder.segments.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 character.setSegment(newVal);
+                colorChar(character, finalConvertView);
                 reSort();
             }
         });
@@ -116,10 +119,10 @@ public class CharacterAdapter<T> extends ArrayAdapter<T> {
             }
         });
         holder.secVA.setText(String.valueOf(character.getSecondaryVA()));
-        holder.rollSecRes.setOnClickListener(new View.OnClickListener() {
+        holder.rollSec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finalHolder.rollMainRes.setText(String.valueOf(character.rollSkill(2)));
+                finalHolder.rollSecRes.setText(String.valueOf(character.rollSkill(2)));
                 finalHolder.segments.setValue(character.getSegment());
                 reSort();
             }
@@ -172,11 +175,22 @@ public class CharacterAdapter<T> extends ArrayAdapter<T> {
                 builder.show();
             }
         });
+        colorChar(character, convertView);
         return convertView;
     }
 
     public List<Character> getCharacterList() {
         return (List<Character>) characterList;
+    }
+
+    private void colorChar(Character character, View convertView){
+        if(character.getSegment() > ((Tracker)context).getCurrentSegment()){
+            convertView.setBackgroundColor(0xFFB40404);
+        }else if(character.getSegment()==((Tracker)context).getCurrentSegment()){
+            convertView.setBackgroundColor(0xFF088A08);
+        }else{
+            convertView.setBackgroundColor(0x00000000);
+        }
     }
 
     public static class ViewHolder{

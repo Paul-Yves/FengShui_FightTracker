@@ -131,8 +131,8 @@ public class Character implements Comparable<Character>{
 
     @Override
     public int compareTo(Character other){
-        Integer mySpeed = new Integer(speed);
-        Integer hisSpeed = new Integer(other.speed);
-        return mySpeed.compareTo(hisSpeed);
+        Integer mySpeed = new Integer(segment);
+        Integer hisSpeed = new Integer(other.segment);
+        return hisSpeed.compareTo(mySpeed);
     }
 }
