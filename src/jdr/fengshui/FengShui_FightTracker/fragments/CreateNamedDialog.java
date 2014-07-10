@@ -65,7 +65,6 @@ public class CreateNamedDialog extends DialogFragment {
                     int toughnessVal = Integer.parseInt(toughness.getText().toString());
                     Named newChar = new Named(charName,mainVA,secVA,speedVal,toughnessVal);
                     result = 1;
-                    Toast.makeText(getActivity(), newChar.toString(), Toast.LENGTH_SHORT).show();
                     charAdapter.addItem(newChar);
                     charAdapter.reSort();
                 } catch(NumberFormatException e) {
